@@ -16,7 +16,7 @@ export class TournamentsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TournamentsPage');
+
   }
 
 }

@@ -16,7 +16,10 @@ export class TeamDetailPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TeamDetailPage');
+    /*console.log('ionViewDidLoad TeamDetailPage');*/  // юслес кал вроде бы
   }
 
 }
+
+
+//ionic generate page TeamDetail
