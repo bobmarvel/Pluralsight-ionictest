@@ -6,13 +6,20 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Tournaments</ion-title>
+  <ion-navbar color="primary"> <!--цвет применяется именно к главному блочному элементу, а не к самому тайтлу (в этом случае)-->
+    <ion-title >Select a tournament</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+<ion-list>
+  <button ion-button outline (click)="itemTapped()">  <!--неважно, что он пишет, что айтем не доступен, аутлайн можно тут ставить-->
+    Match Madness tournament                          <!--смотреть в доках-->
+  </button>
+  <button ion-button outline (click)="itemTapped()">
+    Summer showdown
+  </button>
+</ion-list>
 </ion-content>

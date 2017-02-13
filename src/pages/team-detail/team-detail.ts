@@ -12,12 +12,16 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'team-detail.html'
 })
 export class TeamDetailPage {
+team: any;  // задаем переменную teams, использованную в teams.ts для редиректа сюда
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
-
-  ionViewDidLoad() {
-    /*console.log('ionViewDidLoad TeamDetailPage');*/  // юслес кал вроде бы
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+   this.team = this.navParams.data;   // к конкретной команде присваеваем данные из navparams
+    console.log('**nav params: ', this.navParams);  // чекер
   }
+
+  /*ionViewDidLoad() {
+    /!*console.log('ionViewDidLoad TeamDetailPage');*!/  // юслес кал вроде бы
+  }*/
 
 }
 
