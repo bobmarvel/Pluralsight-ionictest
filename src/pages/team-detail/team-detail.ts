@@ -16,12 +16,17 @@ team: any;  // задаем переменную teams, использованн
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
    this.team = this.navParams.data;   // к конкретной команде присваеваем данные из navparams
-    console.log('**nav params: ', this.navParams);  // чекер
+    console.log('**nav params: ', this.navParams);  // чекеp
+  }
+  goHome() {
+    this.navCtrl.parent.parent.popToRoot(); // юзаем два пэрента, потому что в 1-м родителе
+    //  у нас Tabs, следовательно, нам нужен пэрент табсов, а там уже редирект на рут
+    // this.nav.push(MyTeamsPage) - неподходит, потому что будет стрелка назад
+    // this.nav.popToRoot() - неподходит, потому что у Sub-табсов пэрентом является Tabs,
+    // следователно, редирект будет относительно пэрента, т.е никуда (в табс).
   }
 
-  /*ionViewDidLoad() {
-    /!*console.log('ionViewDidLoad TeamDetailPage');*!/  // юслес кал вроде бы
-  }*/
+
 
 }
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import {TeamDetailPage} from "../team-detail/team-detail";
+import {TeamHomePage} from "../team-home/team-home";
+
 /*
   Generated class for the Teams page.
 
@@ -22,7 +23,8 @@ export class TeamsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
 itemTapped($event, team) {      // передаем параметры эвент и команда, эвент - куда редиректим, team - какая конкретно команда
-    this.navCtrl.push(TeamDetailPage, team);
+    this.navCtrl.push(TeamHomePage, team);
+
 }
 
 }

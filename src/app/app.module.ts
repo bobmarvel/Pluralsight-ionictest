@@ -1,16 +1,18 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import {GamePage, MyTeamsPage, TournamentsPage, TeamsPage, TeamDetailPage  } from "../pages/pages";
+import {GamePage, MyTeamsPage, TournamentsPage, TeamsPage, TeamDetailPage,StandingsPage,TeamHomePage  } from "../pages/pages";
 
 @NgModule({
   declarations: [
     MyApp,
-    TeamDetailPage,
+    TeamDetailPage,  // не забывать закидывать новые страницы в декларации и ентрикомпонентс
     MyTeamsPage,
     GamePage,
     TournamentsPage,
-    TeamsPage
+    TeamsPage,
+    StandingsPage,
+    TeamHomePage
 
   ],
   imports: [
@@ -23,7 +25,9 @@ import {GamePage, MyTeamsPage, TournamentsPage, TeamsPage, TeamDetailPage  } fro
     MyTeamsPage,
     GamePage,
     TournamentsPage,
-    TeamsPage
+    TeamsPage,
+    StandingsPage,
+    TeamHomePage
 
 
   ],
