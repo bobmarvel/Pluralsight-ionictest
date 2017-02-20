@@ -2,6 +2,8 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import {GamePage, MyTeamsPage, TournamentsPage, TeamsPage, TeamDetailPage,StandingsPage,TeamHomePage  } from "../pages/pages";
+import {HttpModule, Http  } from '@angular/http';
+import {EliteApi} from "../shared/elite-api.service";
 
 @NgModule({
   declarations: [
@@ -12,13 +14,16 @@ import {GamePage, MyTeamsPage, TournamentsPage, TeamsPage, TeamDetailPage,Standi
     TournamentsPage,
     TeamsPage,
     StandingsPage,
-    TeamHomePage
+    TeamHomePage,
+
 
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule
+
   ],
-  bootstrap: [IonicApp],
+   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     TeamDetailPage,
@@ -27,10 +32,11 @@ import {GamePage, MyTeamsPage, TournamentsPage, TeamsPage, TeamDetailPage,Standi
     TournamentsPage,
     TeamsPage,
     StandingsPage,
-    TeamHomePage
+    TeamHomePage,
+
 
 
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler,}, EliteApi]
 })
 export class AppModule {}

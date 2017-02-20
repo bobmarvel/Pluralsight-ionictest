@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-
+import * as _ from 'lodash';
+import {EliteApi} from "../../shared/elite-api.service";
 /*
   Generated class for the TeamDetail page.
 
@@ -12,20 +13,58 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'team-detail.html'
 })
 export class TeamDetailPage {
+  games: any[];
+  private tourneyData;
 team: any;  // задаем переменную teams, использованную в teams.ts для редиректа сюда
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-   this.team = this.navParams.data;   // к конкретной команде присваеваем данные из navparams
-    console.log('**nav params: ', this.navParams);  // чекеp
+  constructor(public navCtrl: NavController, public navParams: NavParams, private eliteApi: EliteApi) {
+    /*console.log('**nav params: ', this.navParams);  // чекеp*/
   }
-  goHome() {
+  ionViewDidLoad(){
+    this.team = this.navParams.data;
+    this.tourneyData = this.eliteApi.getCurrentTourney();
+
+    this.games = _.chain(this.tourneyData.games)
+      .filter(g => g.team1Id === this.team.id || g.team2Id === this.team.id)
+      .map(g => {
+        let isTeam1 = (g.team1Id === this.team.id);
+        let opponentName = isTeam1 ? g.team2 : g.team1;
+        let scoreDisplay = this.getScoreDisplay(isTeam1, g.team1Score, g.team2Score);
+        return {
+          gameId: g.id,
+          opponent: opponentName,
+          time: Date.parse(g.time),
+          location: g.location,
+          locationUrl: g.locationUrl,
+          scoreDisplay: scoreDisplay,
+          homeAway: (isTeam1 ? "vs." : "at")
+        };
+      })
+      .value();
+
+
+
+  }
+
+  getScoreDisplay(isTeam1, team1Score, team2Score) {
+    if (team1Score && team2Score) {
+      var teamScore = (isTeam1 ? team1Score : team2Score);
+      var opponentScore = (isTeam1 ? team2Score : team1Score);
+      var winIndicator = teamScore > opponentScore ? "W: " : "L: ";
+      return winIndicator + teamScore + "-" + opponentScore;
+    }
+    else {
+      return "";
+    }
+  }
+  /*goHome() {
     this.navCtrl.parent.parent.popToRoot(); // юзаем два пэрента, потому что в 1-м родителе
     //  у нас Tabs, следовательно, нам нужен пэрент табсов, а там уже редирект на рут
     // this.nav.push(MyTeamsPage) - неподходит, потому что будет стрелка назад
     // this.nav.popToRoot() - неподходит, потому что у Sub-табсов пэрентом является Tabs,
     // следователно, редирект будет относительно пэрента, т.е никуда (в табс).
-  }
-
+  }  НЕ ЮЗАЕМ ЭТО, ПОТОМУ ЧТО У НАС УЖЕ ЕСТЬ ИКОНКА HOME, ЭТО БЫЛО ДЛЯ ПРИМЕРА
+*/
 
 
 }

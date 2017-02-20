@@ -15,11 +15,11 @@
 
 <ion-content padding>
 <ion-list>
-  <button ion-item (click)="itemTapped()">  <!--неважно, что он пишет, что айтем не доступен, аутлайн можно тут ставить-->
-    Match Madness tournament                          <!--смотреть в доках-->
+  <button ion-item (click)="itemTapped($event, item)" *ngFor="let item of tournaments"> <!-- item - каждый элемент tournaments, к каждому из них биндим эвент itemTapped()-->
+    {{item.name}}  <!--// и потом выводим имя каждого айтема-->
   </button>
-  <button ion-item (click)="itemTapped()">
-    Summer showdown
-  </button>
+  <!--<button ion-item (click)="itemTapped()"> &lt;!&ndash;неважно, что он пишет, что айтем не доступен, аутлайн можно тут ставить&ndash;&gt;
+    Summer showdown    &lt;!&ndash;смотреть в доках&ndash;&gt; &lt;!&ndash; HARDCODED CODE - УБРАЛИ, ЧТОБЫ ДАУНЛОАДИТЬ ЖИСОН&ndash;&gt;
+  </button>-->
 </ion-list>
 </ion-content>

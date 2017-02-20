@@ -7,14 +7,16 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>{{team.name}}</ion-title> <!-- двойные скобки для динамического назначения team в зависимости от значения team.name-->
+   <!-- <ion-title>{{team.name}}</ion-title> --><!-- двойные скобки для динамического назначения team в зависимости от значения team.name-->
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding> <!--сюда запихивается контент страницы-->
-<h2>Team Detail</h2>
-  <h3>Name: {{team.name}}</h3>
-  <button ion-button (click)="goHome()">Go Home</button>
+  <ion-list>
+    <ion-item *ngFor="let game of games">
+      {{game.opponent}}
+    </ion-item>
+  </ion-list>
 </ion-content>
