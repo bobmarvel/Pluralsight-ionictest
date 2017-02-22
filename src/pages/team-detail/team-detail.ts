@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import * as _ from 'lodash';
 import {EliteApi} from "../../shared/elite-api.service";
+import { GamePage } from '../game/game';
 /*
   Generated class for the TeamDetail page.
 
@@ -25,19 +26,19 @@ team: any;  // задаем переменную teams, использованн
     this.tourneyData = this.eliteApi.getCurrentTourney();
 
     this.games = _.chain(this.tourneyData.games)
-      .filter(g => g.team1Id === this.team.id || g.team2Id === this.team.id)
-      .map(g => {
-        let isTeam1 = (g.team1Id === this.team.id);
-        let opponentName = isTeam1 ? g.team2 : g.team1;
-        let scoreDisplay = this.getScoreDisplay(isTeam1, g.team1Score, g.team2Score);
+      .filter(games => games.team1Id === this.team.id || games.team2Id === this.team.id)
+      .map(games => {
+        let isTeam1 = (games.team1Id === this.team.id);
+        let opponentName = isTeam1 ? games.team2 : games.team1;
+        let scoreDisplay = this.getScoreDisplay(isTeam1, games.team1Score, games.team2Score);
         return {
-          gameId: g.id,
+          gameId: games.id,
           opponent: opponentName,
-          time: Date.parse(g.time),
-          location: g.location,
-          locationUrl: g.locationUrl,
+          time: Date.parse(games.time),
+          location: games.location,
+          locationUrl: games.locationUrl,
           scoreDisplay: scoreDisplay,
-          homeAway: (isTeam1 ? "vs." : "at")
+          homeAway: (isTeam1 ? "vs." : "at") // if its isTeam1 use "vs" otherwise use "at"
         };
       })
       .value();
@@ -48,7 +49,7 @@ team: any;  // задаем переменную teams, использованн
 
   getScoreDisplay(isTeam1, team1Score, team2Score) {
     if (team1Score && team2Score) {
-      var teamScore = (isTeam1 ? team1Score : team2Score);
+      var teamScore = (isTeam1 ? team1Score : team2Score); //if its team1 use team1score otherwise use teams 2
       var opponentScore = (isTeam1 ? team2Score : team1Score);
       var winIndicator = teamScore > opponentScore ? "W: " : "L: ";
       return winIndicator + teamScore + "-" + opponentScore;
@@ -65,7 +66,11 @@ team: any;  // задаем переменную teams, использованн
     // следователно, редирект будет относительно пэрента, т.е никуда (в табс).
   }  НЕ ЮЗАЕМ ЭТО, ПОТОМУ ЧТО У НАС УЖЕ ЕСТЬ ИКОНКА HOME, ЭТО БЫЛО ДЛЯ ПРИМЕРА
 */
+ gameClicked($event, game) {
+ let SourceGame = this.tourneyData.games.find(games => games.id === game.gameId);
+ this.navCtrl.parent.parent.push(GamePage, SourceGame);
 
+ }
 
 }
 
