@@ -12,6 +12,18 @@
 
 
 <ion-content padding>
-  <button ion-button (click)="goToTournaments()">Find the tournament</button>
+  <ion-list>
+    <ion-list-header>Followed teams</ion-list-header>
+    <button ion-item *ngFor="let fav of favorites" (click)="favoriteTapped($event, fav)">
+      <ion-icon name="star"></ion-icon>
+      {{fav.team.name}}
+      <p>{{fav.tournamentName}}</p>
+    </button>
+  </ion-list>
+  <button ion-button full (click)="goToTournaments()">
+    <ion-icon name="search"></ion-icon>
+    &nbsp; <!--// probel-->
+    Find the tournament
+  </button>
 </ion-content>
 

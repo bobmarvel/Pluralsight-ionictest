@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import {TeamHomePage} from "../team-home/team-home";
 import { EliteApi } from '../../shared/elite-api.service';
+import * as _ from 'lodash';
 
 /*
   Generated class for the Teams page.
@@ -14,7 +15,8 @@ import { EliteApi } from '../../shared/elite-api.service';
   templateUrl: 'teams.html'
 })
 export class TeamsPage {
-
+  private allTeams: any;
+  private  allTeamsDivisions: any;
   teams = [];
 
   /*teams = [       // создаем массив объектов, где объект - team
@@ -34,7 +36,8 @@ export class TeamsPage {
 
   ];*/
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private eliteApi: EliteApi) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private eliteApi: EliteApi, private loadingController: LoadingController) {}
 
 itemTapped($event, team) {      // передаем параметры эвент и команда, эвент - куда редиректим, team - какая конкретно команда
     this.navCtrl.push(TeamHomePage, team);
@@ -42,10 +45,24 @@ itemTapped($event, team) {      // передаем параметры эвен�
 }
   ionViewDidLoad() {
       let selectedTourney = this.navParams.data;  // присваеваем значение выбранного параметра с помощью навпарамса
-      this.eliteApi.getTournamentData(selectedTourney.id)  // юзаем апи для получения данных
-        .subscribe(data => { // сабскайбися, при получении данных
-            this.teams = data.teams;  // присваеваем к teams значения данных
-      })
+
+    let loader = this.loadingController.create({
+      content: 'sususususus'
+    });
+      loader.present().then(
+        () => {
+        this.eliteApi.getTournamentData(selectedTourney.id)  // юзаем апи для получения данных
+          .subscribe(data=> { // сабскайбися, при получении данных
+            this.allTeams = data.teams;
+            this.allTeamsDivisions = _.chain(data.teams)
+              .groupBy('division').toPairs().map(item => _.zipObject(['divisionName', 'divisionTeams'], item)).value();
+            this.teams = this.allTeamsDivisions;  // присваеваем к teams значения данных
+
+            console.log('the division teams are: ',  this.teams);
+            loader.dismiss();
+          });
+      });
+
     }
 
 }
